@@ -2,31 +2,67 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title><!-- ${title}--> Movie</title>
+  <title>Movie</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'><link rel="stylesheet" href="./Add.css">
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+ 
+  <link rel="stylesheet" href="./Add.css">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function() {
+	var max_fields      = 10; //maximum input boxes allowed
+	var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
+	var add_button      = $(".add"); //Add button ID
+	
+	var x = 1; //initlal text box count
+	$(add_button).click(function(e){ //on add input button click
+		e.preventDefault();
+		if(x < max_fields){ //max input box allowed
+			x++; //text box increment
+			$(wrapper).append('<div style="background-color: black"><input type="text" name="mytext[]"/><a href="#" class="remove">Remove</a></div>'); //add input box
+		}
+	});
+	
+	$(wrapper).on("click",".remove", function(e){ //user click on remove text
+		e.preventDefault(); $(this).parent('div').remove(); x--;
+	})
+});
+
+    </script>
+
 
 </head>
 <body>
 <!-- partial:index.partial.html -->
 <div class="container">
   <form>
-    <div class="row">
-      <h4>Account</h4>
+    <div class="row" >
+      <h4>Movies</h4>
       <div class="input-group input-group-icon">
         <input type="text" placeholder="Title"/>
         <div class="input-icon"><i class="fa fa-film"></i></div>
       </div>
       
       <div class="input-group input-group-icon">
-        <input type="email" placeholder="Email Adress"/>
-        <div class="input-icon"><i class="fa fa-envelope"></i></div>
+        <input type="text" placeholder="Image_Url"/>
+        <div class="input-icon"><i class="fa fa-picture-o"></i></div>
       </div>
-      <div class="input-group input-group-icon">
-        <input type="password" placeholder="Password"/>
-        <div class="input-icon"><i class="fa fa-key"></i></div>
+    
+      
+      <div class="textarea-group textarea-group-icon">
+        <textarea id="w3review" name="w3review" placeholder="
+        	Description" rows="3" cols="57"></textarea>
+        <div class="input-icon"></div>
       </div>
-    </div>
+      
+</div>
+      
+      
+    
+    
     <div class="row">
       <div class="col-half">
         <h4>Release Date</h4>
@@ -42,24 +78,75 @@
           </div>
         </div>
       </div>
+      
+      
       <div class="col-half">
         <h4>Type</h4>
         <div class="input-group">
-          <input type="radio" name="type" value="Movie" id="type-movie"/>
-          <label for="gender-movie">Movie</label>
+          <input type="radio" name="type" value="Movie" id="type-movie" checked="true"/>
+          <label for="type-movie"> <span>Movie</span></label>
           <input type="radio" name="type" value="Series" id="type-series"/>
-          <label for="gender-series">Series</label>
+          <label for="type-series"> <span>Movie</span></label>
         </div>
       </div>
     </div>
+    
+    
+    <div class="row">
+      <div class="col-half">
+        <h4>Rating</h4>	       
+	      <div class="input-group input-group-icon">
+	       	 <input type="number" placeholder="Rotten Tomatoes"/>
+	       	 <div class="input-icon"  style="size: 100px"><label>Rotten</label></div>
+	      </div> 
+	      <div class="input-group input-group-icon">
+	       	 <input type="number" step="any" name="comment[]" placeholder="IMDv"/>
+	       	 <div class="input-icon"><label>IMDv</label></div>
+	      </div>	      
+	      <div class="input-group input-group-icon">
+	        <input type="number" step="any" placeholder="Our"/>
+	        <div class="input-icon"><label>Our</label></div>
+	      </div>
+      </div>
+      
+     
+      <div class="col-half">
+        <h4>Language   <button class="add"  style="border:none;">+</button></h4>	       
+	      <div class="input-group input-group-icon">
+	       	 <input type="text" value="English">
+	       	 <a href="#" class="remove">-</a>
+	      </div> 
+	      <div class="input-group input-group-icon">
+	       	 <input type="text" value="Hindi">
+	       	 <a href="#" class="remove">-</a>
+	      </div>
+      </div>
+    </div>
+   
+    <div class="row">
+      <div class="input-group" >
+        <input type="submit" style="background-color: #7ed321"> 
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>
+
+
+
+    <!-- 
     <div class="row">
       <h4>Payment Details</h4>
-      <div class="input-group">
+      <div class="input-group"
         <input type="radio" name="payment-method" value="card" id="payment-method-card" checked="true"/>
         <label for="payment-method-card"><span><i class="fa fa-cc-visa"></i>Credit Card</span></label>
+       
         <input type="radio" name="payment-method" value="paypal" id="payment-method-paypal"/>
         <label for="payment-method-paypal"> <span><i class="fa fa-cc-paypal"></i>Paypal</span></label>
       </div>
+      
+      
       <div class="input-group input-group-icon">
         <input type="text" placeholder="Card Number"/>
         <div class="input-icon"><i class="fa fa-credit-card"></i></div>
@@ -83,17 +170,6 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <h4>Terms and Conditions</h4>
-      <div class="input-group">
-        <input type="checkbox" id="terms"/>
-        <label for="terms">I accept the terms and conditions for signing up to this service, and hereby confirm I have read the privacy policy.</label>
-      </div>
-    </div>
-  </form>
-</div>
-<!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="./script.js"></script>
-
-</body>
-</html>
+   <br>
+   -->
+   
