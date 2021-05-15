@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Moviepur</title>
+
+
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<link href="./all.css" type="text/css" rel="stylesheet">
+
+<script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+          $('.movie-tile').hide().first().show("fast", function showNext() {
+            $(this).next("div").show("fast", showNext);
+          });
+        });
+    </script>
+</head>
+
+<body>
+
+<div class="hader">
+	<h4>Moviepur</h4>
+	<h6>Movie</h6>
+	<h6>Series</h6>
+</div>
+
+	
+	<div  class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="VG5MtenlP-A" data-toggle="modal" data-target="#trailer" style="width: 400px">
+	
+		<input type="hidden" value="2">
+		<img style="margin-top: 10px" src="https://upload.wikimedia.org/wikipedia/en/thumb/a/af/The_BFG_poster.jpg/220px-The_BFG_poster.jpg" width="220" height="300">
+		<h3 style="margin-top: 10px">The BFG</h3> 
+	<input type="submit">
+	</div>
+	<!-- onclick="location.href='submit';" -->
+
+</body>
+</html>

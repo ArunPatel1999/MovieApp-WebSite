@@ -5,30 +5,42 @@
   <title>Movie</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
- 
-  <link rel="stylesheet" href="./Add.css">
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <link href="./add.css" type="text/css" rel="stylesheet" >
+  <script  src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.7/jquery.min.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
 
-$(document).ready(function() {
-	var max_fields      = 10; //maximum input boxes allowed
-	var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
-	var add_button      = $(".add"); //Add button ID
-	
-	var x = 1; //initlal text box count
-	$(add_button).click(function(e){ //on add input button click
-		e.preventDefault();
-		if(x < max_fields){ //max input box allowed
-			x++; //text box increment
-			$(wrapper).append('<div style="background-color: black"><input type="text" name="mytext[]"/><a href="#" class="remove">Remove</a></div>'); //add input box
-		}
-	});
-	
-	$(wrapper).on("click",".remove", function(e){ //user click on remove text
-		e.preventDefault(); $(this).parent('div').remove(); x--;
-	})
+$(document).ready(function(){
+
+    $($('.addLanguage')).click(function(){
+    	    $($('.language')).append(' <div class="input-group input-group-icon"><input type="text"  style="width: 90%;" value="Hindi"><a href="#" style="text-decoration:none;" class="removeLanguage"><strong> --</strong></a> </div>');
+    });
+    
+    $($('.addGenre')).click(function(){
+            $($('.genre')).append('  <div class="input-group input-group-icon"> <input type="text" style="width: 90%;" value="Action"><a href="#" style="text-decoration:none;" class="removeGenre"><strong>--</strong></a></div>');
+    });
+
+    $($('.addDownload')).click(function(){
+            $($('.download')).append(' <div class="input-group"> <input type="text" value="480 p" style="width: 45%;text-align: center;" > <input type="text" style="width: 45%; text-align: center;" placeholder="Link"><a href="#" style="text-decoration:none;" class="removeDownload"><strong>--</strong></a></div>');
+    });
+
+    
+    $($('.language')).on('click', '.removeLanguage', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); 
+    });
+
+    $($('.genre')).on('click', '.removeGenre', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); 
+    });
+    
+    $($('.download')).on('click', '.removeDownload', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); 
+    });
 });
 
     </script>
@@ -68,13 +80,13 @@ $(document).ready(function() {
         <h4>Release Date</h4>
         <div class="input-group">
           <div class="col-third">
-            <input type="text" placeholder="DD"/>
+            <input type="number" placeholder="DD" min="01" max="31"/>
           </div>
           <div class="col-third">
-            <input type="text" placeholder="MM"/>
+            <input type="number" placeholder="MM"  min="01" max="12"/>
           </div>
           <div class="col-third">
-            <input type="text" placeholder="YYYY"/>
+            <input type="number" placeholder="YYYY" maxlength="4"/>
           </div>
         </div>
       </div>
@@ -86,7 +98,7 @@ $(document).ready(function() {
           <input type="radio" name="type" value="Movie" id="type-movie" checked="true"/>
           <label for="type-movie"> <span>Movie</span></label>
           <input type="radio" name="type" value="Series" id="type-series"/>
-          <label for="type-series"> <span>Movie</span></label>
+          <label for="type-series"> <span>Series</span></label>
         </div>
       </div>
     </div>
@@ -96,30 +108,51 @@ $(document).ready(function() {
       <div class="col-half">
         <h4>Rating</h4>	       
 	      <div class="input-group input-group-icon">
-	       	 <input type="number" placeholder="Rotten Tomatoes"/>
+	       	 <input type="number" placeholder="Rotten Tomatoes" min="0" max="100.0"/>
 	       	 <div class="input-icon"  style="size: 100px"><label>Rotten</label></div>
 	      </div> 
 	      <div class="input-group input-group-icon">
-	       	 <input type="number" step="any" name="comment[]" placeholder="IMDv"/>
-	       	 <div class="input-icon"><label>IMDv</label></div>
+	       	 <input type="number" step="any" name="comment[]" placeholder="IMDb" min="0.0" max="10.0"/>
+	       	 <div class="input-icon"><label>IMDb</label></div>
 	      </div>	      
 	      <div class="input-group input-group-icon">
-	        <input type="number" step="any" placeholder="Our"/>
-	        <div class="input-icon"><label>Our</label></div>
+	        <input type="number" step="any" placeholder="Moviepur" min="0.0" max="10.0"/>
+	        <div class="input-icon"><label>Moviepur</label></div>
 	      </div>
       </div>
       
      
-      <div class="col-half">
-        <h4>Language   <button class="add"  style="border:none;">+</button></h4>	       
-	      <div class="input-group input-group-icon">
-	       	 <input type="text" value="English">
-	       	 <a href="#" class="remove">-</a>
-	      </div> 
-	      <div class="input-group input-group-icon">
-	       	 <input type="text" value="Hindi">
-	       	 <a href="#" class="remove">-</a>
-	      </div>
+      <div class="col-half language">   
+         <h4>Language   <a href="#" style="text-decoration:none;" class="addLanguage"><strong>   +</strong></a>         </h4>	       
+	        <div class="input-group input-group-icon">
+	        	 <input type="text" style="width: 90%;" value="English">
+	        	 <a href="#" style="text-decoration:none;" class="removeLanguage"><strong>--</strong></a>
+	       </div> 
+	       <div class="input-group input-group-icon">
+	       	 <input type="text"  style="width: 90%;" value="Hindi">
+	       	 <a href="#" style="text-decoration:none;" class="removeLanguage"><strong> --</strong></a>
+	       </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-half genre">
+        <h4>Genre <a href="#" style="text-decoration:none;" class="addGenre"><strong>   +</strong></a></h4>	       
+	        <div class="input-group input-group-icon">
+	        	 <input type="text" style="width: 90%;" value="Action">
+	        	 <a href="#" style="text-decoration:none;" class="removeGenre"><strong>--</strong></a>
+	       </div>
+      </div>
+      
+     
+      <div class="col-half download">   
+         <h4>Download Link   <a href="#" style="text-decoration:none;" class="addDownload"><strong>   +</strong></a></h4>	   
+         
+         <div class="input-group">
+	        	<input type="text" value="480 p" style="width: 45%;text-align: center;" > 
+            <input type="text" style="width: 45%; text-align: center;" placeholder="Link">
+            <a href="#" style="text-decoration:none;" class="removeDownload"><strong>--</strong></a>
+	       </div> 
       </div>
     </div>
    
