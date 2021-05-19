@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>Moviepur</title>
@@ -11,31 +11,37 @@
 <link href="./all.css" type="text/css" rel="stylesheet">
 
 <script type="text/javascript" charset="utf-8">
-        $(document).ready(function () {
-          $('.movie-tile').hide().first().show("fast", function showNext() {
-            $(this).next("div").show("fast", showNext);
-          });
-        });
-    </script>
+	$(document).ready(function() {
+		$('.movie-tile').hide().first().show("fast", function showNext() {
+			$(this).next("div").show("fast", showNext);
+		});
+	});
+</script>
 </head>
 
 <body>
 
-<div class="hader">
-	<h4>Moviepur</h4>
-	<h6>Movie</h6>
-	<h6>Series</h6>
-</div>
-
-	
-	<div  class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="VG5MtenlP-A" data-toggle="modal" data-target="#trailer" style="width: 400px">
-	
-		<input type="hidden" value="2">
-		<img style="margin-top: 10px" src="https://upload.wikimedia.org/wikipedia/en/thumb/a/af/The_BFG_poster.jpg/220px-The_BFG_poster.jpg" width="220" height="300">
-		<h3 style="margin-top: 10px">The BFG</h3> 
-	<input type="submit">
+	<div class="hader">
+		<h4>Moviepur</h4>
+		<h6>Movie</h6>
+		<h6>Series</h6>
 	</div>
-	<!-- onclick="location.href='submit';" -->
+
+
+	<div th:each="MovieList : ${MovieList}" 
+		class="col-md-6 col-lg-4 movie-tile text-center fullDetails"
+		data-trailer-youtube-id="VG5MtenlP-A" data-toggle="modal"
+		data-target="#trailer" style="width: 350px; margin-left: 5px">
+		
+		<form method="post" action="fullDetails">
+			<a onclick="this.parentNode.submit();" class="fill-div"> 
+				
+				<input 	type="hidden" name="id" th:value="${MovieList.id}"> 
+				<img style="margin-top: 10px" th:src="${MovieList.image_url}" width="220"	height="300" alt="">
+				<h4 style="margin-top: 10px" th:text="${MovieList.name}">The BFG</h4> <a  th:href="@{/edit/}+${MovieList.id}" >Edit</a>
+			</a>
+		</form>
+	</div>
 
 </body>
 </html>

@@ -5,6 +5,14 @@ body {
 	bgcolor: blue;
 }
 
+a.fill-div {
+        	    display: block;
+        	    height: 100%;
+        	    width: 100%;
+        	    color: black;
+        	    text-decoration: none;
+        	}
+        	
 #trailer .modal-dialog {
 	margin-top: 200px;
 	width: 640px;

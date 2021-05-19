@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Movie</title>
+  <title th:Text="${Title}">Movie</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
   <link href="./add.css" type="text/css" rel="stylesheet" >
@@ -49,12 +49,12 @@ $(document).ready(function(){
 </head>
 <body>
 <!-- partial:index.partial.html -->
-<div class="container">
+<div class="container" th:each="Movie : ${Movie}"  >
   <form>
     <div class="row" >
-      <h4>Movies</h4>
+      <h4 th:value={Movie.type}>Movies</h4>
       <div class="input-group input-group-icon">
-        <input type="text" placeholder="Title"/>
+        <input type="text" placeholder="Title" th:text={Movie.name}/>
         <div class="input-icon"><i class="fa fa-film"></i></div>
       </div>
       

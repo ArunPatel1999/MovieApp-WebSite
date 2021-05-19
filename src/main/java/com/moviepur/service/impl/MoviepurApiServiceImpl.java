@@ -17,8 +17,8 @@ import com.moviepur.service.MoviepurApiService;
 @Service
 public class MoviepurApiServiceImpl implements MoviepurApiService {
 
-	@Value("Moviepur_Api_Url")
-	private String URL;
+	@Value("${Moviepur_Api_Url}")
+	private String MOVIEPURURL;
 	
 	@Autowired
 	private RestTemplate restTemplate;
@@ -26,20 +26,21 @@ public class MoviepurApiServiceImpl implements MoviepurApiService {
 	
 	@Override
 	public List<MovieLite> getAll() {
-		ResponseEntity<MovieLite[]> entity = restTemplate.getForEntity(URL, MovieLite[].class);
+		ResponseEntity<MovieLite[]> entity = restTemplate.getForEntity(MOVIEPURURL+"/all", MovieLite[].class);
 		return Arrays.asList(entity.getBody());
 	}
 
 
 	@Override
 	public List<MovieLite> getAllByType(Type type) {
-		return null;
+		ResponseEntity<MovieLite[]> entity = restTemplate.getForEntity(MOVIEPURURL+"/"+type, MovieLite[].class);
+		return Arrays.asList(entity.getBody());
 	}
 
 
 	@Override
 	public Movie getById(int id) {
-		return null;
+		return restTemplate.postForObject(MOVIEPURURL+"/main/get/"+id, null, Movie.class);
 	}
 	
 }
