@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+<link href="./allmovies.css" type="text/css" rel="stylesheet">
+ <link href="./image/webtab.png" rel="icon" >
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<h2 style="text-align: center;">Movie</h2>
+		</div>
+	</div>
+
+	<div></div>
+
+
+	<div id="container">
+		<div id="contain">
+			<br> <input type="button" style="margin-left:45%; background: #ff4040; height: 40px;" value="Add Movie"
+				onclick="window.location.href='add'; return false; "
+				class="add-button">
+
+			<table>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Release Date</th>
+					<th>Operation</th>
+				</tr>
+
+				<tr th:each="MovieList : ${list}" >
+					<td th:text="${MovieList.id}">1</td>
+					<td th:text="${MovieList.name}">Ant-Man</td>
+					<td th:text="${MovieList.type}">Movie</td>
+					<td th:text="${MovieList.releaseDate}">2018-04-21</td>
+					<td><form action="/edit" method="POST">
+					<input type="hidden" name="id" value="1" th:value="${MovieList.id}">
+					<input type="submit" value="Update"	style="margin-top: 13px; background: #12ffd3; " class="add-button">
+					</form></td>
+				</tr>
+
+			</table>
+		</div>
+	</div>
+
+</body>
+</html>
