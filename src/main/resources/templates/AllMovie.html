@@ -4,23 +4,62 @@
 <meta charset="ISO-8859-1">
 <title>Home</title>
 <link href="./allmovies.css" type="text/css" rel="stylesheet">
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
  <link href="./image/webtab.png" rel="icon" >
+ 
+ <style type="text/css">
+ * {box-sizing: border-box;}
+
+input {
+  flex: 1 1 auto;
+  font-weight: 400;
+  padding: .5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: .3rem 0 0 .3rem;
+  outline: 0;
+}
+
+button {
+  font-weight: 400;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+  border: 1px solid transparent;  
+  padding: .5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-radius: 0 .3rem .3rem 0;
+  background-color: #007bff;
+  outline: 0;
+}
+ </style>
+ 
 </head>
 <body>
 	<div id="wrapper">
 		<div id="header">
-			<h2 style="text-align: center;">Movie</h2>
+			<h2 style="text-align: center;"><a href="./">Movie</a></h2>
 		</div>
 	</div>
-
-	<div></div>
 
 
 	<div id="container">
 		<div id="contain">
-			<br> <input type="button" style="margin-left:45%; background: #ff4040; height: 40px;" value="Add Movie"
-				onclick="window.location.href='add'; return false; "
-				class="add-button">
+			<br> <table>
+			<tr style="border-color: white;"><th style="background: white;"><input type="button" style=" background: #ff4040; height: 40px;" value="Add Movie"
+				onclick="window.location.href='/add'; return false; "
+				class="add-button"></th>
+			<th style="background: white;">
+				<form action="./search"><div class="form-group">
+    				<input type="text" name="moviename" placeholder="search...">
+   					<button type="submit"><i class="fa fa-search"></i></button>
+  				</div></form>
+			</th></tr></table>
 
 			<table>
 				<tr>
@@ -32,13 +71,13 @@
 				</tr>
 
 				<tr th:each="MovieList : ${list}" >
-					<td th:text="${MovieList.id}">1</td>
-					<td th:text="${MovieList.name}">Ant-Man</td>
-					<td th:text="${MovieList.type}">Movie</td>
-					<td th:text="${MovieList.releaseDate}">2018-04-21</td>
+					<td th:text="${MovieList[id]}">1</td>
+					<td th:text="${MovieList[name]}">Ant-Man</td>
+					<td th:text="${MovieList[type]}">Movie</td>
+					<td th:text="${MovieList[release_date]}">2018-04-21</td>
 					<td><form action="/edit" method="POST">
-					<input type="hidden" name="id" value="1" th:value="${MovieList.id}">
-					<input type="submit" value="Update"	style="margin-top: 13px; background: #12ffd3; " class="add-button">
+					<input type="hidden" name="id" value="1" th:value="${MovieList[id]}">
+					<input type="submit" value="Update"	style="margin-top: 13px; background: #e62ba0; " class="add-button">
 					</form></td>
 				</tr>
 
