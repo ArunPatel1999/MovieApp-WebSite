@@ -63,7 +63,7 @@ $(document).ready(function(){
 <body>
 <!-- partial:index.partial.html -->
 <div class="container"   >
-  <form method="POST"  action="./save">
+  <form method="POST"  action="./saveWithFile">
     <div class="row" >
       <h4 >Movies</h4>
       <div class="input-group input-group-icon">
@@ -73,7 +73,7 @@ $(document).ready(function(){
       </div>
       
       <div class="input-group input-group-icon">
-        <input type="text" th:value="${movie.image_url}" placeholder="Image Url" name="image_url" required="required"/>
+        <input type="file" th:value="${movie.image_url}" placeholder="Image Url" name="image_url" required="required"/>
         <div class="input-icon"><i class="fa fa-picture-o"></i></div>
       </div>
     
@@ -113,7 +113,7 @@ $(document).ready(function(){
           </div>
           
           <div class="col-half">
-            <input type="number" th:value="${min}" placeholder="m"  min="00" max="59" name="min"  required="required"/>
+            <input type="number" th:value="${min}" placeholder="m"  min="00" max="59" name="min" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;"  required="required"/>
           </div>
          
         </div>
@@ -141,10 +141,10 @@ $(document).ready(function(){
         <h4>Release Date</h4>
         <div class="input-group">
           <div class="col-third">
-            <input type="number"  th:value="${d}"  required="required" placeholder="DD" min="01" max="31" name="d"/>
+            <input type="number"  th:value="${d}"  required="required" placeholder="DD" min="01" max="31" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;" name="d"/>
           </div>
           <div class="col-third">
-            <input type="number"  th:value="${m}" required="required" placeholder="MM"  min="01" max="12" name="m"/>
+            <input type="number"  th:value="${m}" required="required" placeholder="MM"  min="01" max="12" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;" name="m"/>
           </div>
           <div class="col-third">
             <input type="number"  th:value="${y}" required="required" placeholder="YYYY" maxlength="4"  name="y"/>
@@ -208,7 +208,7 @@ $(document).ready(function(){
    
          <div class="input-group"  th:each="map : ${movie.download_link}">
 	      		 <input type="text" th:value="${map.key}" name="downloadname" required="required"  value="Download" style="width: 45%; text-align: center;" > 
-            	<input type="text" th:value="${map.value}" name="downloadvalue" required="required" style="width: 45%; text-align: center;" placeholder="Link">
+            	<input type="file" th:value="${map.value}" name="downloadvalue" required="required" style="width: 45%; text-align: center;" placeholder="Link">
            		<a href="#" style="text-decoration:none;" class="removeDownload"><strong>--</strong></a>
 	       </div> 
       </div>
@@ -217,7 +217,7 @@ $(document).ready(function(){
       <div class="col-full otherImages ">   
          <h4>Other Images   <a href="#" style="text-decoration:none;" class="addOtherImages"><strong>    +</strong></a>         </h4>	       
 	        <div class="input-group input-group-icon" th:each="otherImages : ${movie.otherImages}">
-	        	 <input type="text" th:value="${otherImages}" required="required" name="otherImages" style="width: 90%;" >  
+	        	 <input type="file" th:value="${otherImages}" required="required" name="otherImages" style="width: 90%;" >  
 	        	 <a href="#" style="text-decoration:none;" class="removeOtherImages"><strong> --</strong></a>
 	    	   <div class="input-icon"><i class="fa fa-file-image-o"></i></div>
         	</div>

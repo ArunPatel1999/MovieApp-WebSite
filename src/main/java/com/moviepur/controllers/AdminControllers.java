@@ -62,6 +62,13 @@ public class AdminControllers {
 		return "Add";
 	}
 	
+	@GetMapping("/addWithFile")
+	public String addWithFile(Model model) {
+		model.addAttribute("title","Add");
+		model.addAttribute("movie", new Movie());
+		return "AddWithFile";
+	}
+	
 	@PostMapping("/edit")
 	public String getEditPage(@RequestParam("id") int id, Model model) {
 		
