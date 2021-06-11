@@ -14,6 +14,7 @@ import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -29,14 +30,15 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.moviepur.entity.FirebaseClass;
 import com.moviepur.entity.Movie;
+import com.moviepur.entity.Type;
 
 @Service
 public class AdminApiServiceImpl implements AdminApiService {
 
-//	@Value("${Moviepur_Api_Url}")
-//	private String MOVIEPURURL;
+	@Value("${Moviepur_Api_Url}")
+	private String MOVIEPURURL;
 	
-	private final String MOVIEPURURL ="http://127.0.0.1:9090";
+//	private final String MOVIEPURURL ="http://127.0.0.1:9090";
 
 	private FirebaseClass firebaseClass;
 
@@ -84,13 +86,13 @@ public class AdminApiServiceImpl implements AdminApiService {
 		
 		
 		Map<String, String> downlodMap = new LinkedHashMap<>();
-		if(downloads.length == 1) 
-			downlodMap.put("Download", uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/video/", movie.getName()+downloads[0].getOriginalFilename().substring(downloads[0].getOriginalFilename().lastIndexOf(".")), downloads[0]));
-		
+		String downloadName = "Download_";
+		if(movie.getType() == Type.Series)
+			downloadName = "Part_";
 		i=1;
 		if(downloads.length >= 1) {
 		for (MultipartFile  download: downloads) 
-			downlodMap.put( "Part_"+i , uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/video/", movie.getName()+"_part_"+(i++)+""+download.getOriginalFilename().substring(download.getOriginalFilename().lastIndexOf(".")), download));
+			downlodMap.put( downloadName+i , uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/video/", movie.getName()+"_"+downloadName+(i++)+""+download.getOriginalFilename().substring(download.getOriginalFilename().lastIndexOf(".")), download));
 		}
 		
 		movie.setDownload_link(downlodMap);

@@ -23,11 +23,11 @@ $(document).ready(function(){
     });
 
     $($('.addDownload')).click(function(){
-            $($('.download')).append('<div class="input-group"  th:each="map : ${movie.download_link}"><input type="text" th:value="${map.key}" name="downloadname" required="required"  value="Download" style="width: 45%; text-align: center;" >  <input type="text" th:value="${map.value}" name="downloadvalue" required="required" style="width: 45%; text-align: center;" placeholder="Link"><a href="#" style="text-decoration:none;" class="removeDownload"><strong>--</strong></a></div> ');
+            $($('.download')).append('<div class="input-group" ><input type="file"   name="downloads[]" required="required"  style="width:90%;   text-align: center;" placeholder="Link"> <a href="#" style="text-decoration:none;" class="removeDownload"><strong>--</strong></a></div> ');
     });
 
     $($('.addOtherImages')).click(function(){
-        $($('.otherImages')).append('<div class="input-group input-group-icon" th:each="otherImages : ${movie.otherImages}"><input type="text" th:value="${otherImages}" required="required" name="otherImages" style="width: 90%;">  <a href="#" style="text-decoration:none;" class="removeOtherImages"><strong> --</strong></a><div class="input-icon"><i class="fa fa-file-image-o"></i></div></div>');
+        $($('.otherImages')).append('<div class="input-group input-group-icon"><input type="file" required="required" name="screenShot[]" style="width: 90%;" > <a href="#" style="text-decoration:none;" class="removeOtherImages"><strong> --</strong></a><div class="input-icon"><i class="fa fa-file-image-o"></i></div></div>');
 	});
 
     
@@ -63,7 +63,7 @@ $(document).ready(function(){
 <body>
 <!-- partial:index.partial.html -->
 <div class="container"   >
-  <form method="POST"  action="./saveWithFile">
+  <form method="POST"  action="./saveWithFile" enctype="multipart/form-data">
     <div class="row" >
       <h4 >Movies</h4>
       <div class="input-group input-group-icon">
@@ -73,7 +73,7 @@ $(document).ready(function(){
       </div>
       
       <div class="input-group input-group-icon">
-        <input type="file" th:value="${movie.image_url}" placeholder="Image Url" name="image_url" required="required"/>
+        <input type="file"  accept="image/png, image/jpeg" name="thumbImage" required="required"/>
         <div class="input-icon"><i class="fa fa-picture-o"></i></div>
       </div>
     
@@ -205,10 +205,8 @@ $(document).ready(function(){
      
       <div class="col-half download">   
          <h4>Download Link   <a href="#" style="text-decoration:none;" class="addDownload"><strong>   +</strong></a></h4>	   
-   
-         <div class="input-group"  th:each="map : ${movie.download_link}">
-	      		 <input type="text" th:value="${map.key}" name="downloadname" required="required"  value="Download" style="width: 45%; text-align: center;" > 
-            	<input type="file" th:value="${map.value}" name="downloadvalue" required="required" style="width: 45%; text-align: center;" placeholder="Link">
+         <div class="input-group" >
+          		<input type="file"   name="downloads[]" required="required"  style="width:90%;   text-align: center;" placeholder="Link"> 
            		<a href="#" style="text-decoration:none;" class="removeDownload"><strong>--</strong></a>
 	       </div> 
       </div>
@@ -216,8 +214,8 @@ $(document).ready(function(){
    
       <div class="col-full otherImages ">   
          <h4>Other Images   <a href="#" style="text-decoration:none;" class="addOtherImages"><strong>    +</strong></a>         </h4>	       
-	        <div class="input-group input-group-icon" th:each="otherImages : ${movie.otherImages}">
-	        	 <input type="file" th:value="${otherImages}" required="required" name="otherImages" style="width: 90%;" >  
+	        <div class="input-group input-group-icon">
+	        	 <input type="file" required="required" name="screenShot[]" style="width: 90%;" >  
 	        	 <a href="#" style="text-decoration:none;" class="removeOtherImages"><strong> --</strong></a>
 	    	   <div class="input-icon"><i class="fa fa-file-image-o"></i></div>
         	</div>
