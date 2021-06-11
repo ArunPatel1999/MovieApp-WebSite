@@ -65,7 +65,7 @@ $(document).ready(function(){
 <div class="container"   >
   <form method="POST"  action="./save">
     <div class="row" >
-      <h4 >Movies</h4>
+      <h4 ><a href="./">Movies</a></h4>
       <div class="input-group input-group-icon">
       	<input type="hidden" name = "id" th:value="${movie.id}" >
         <input type="text" th:value="${movie.name}" placeholder="Title" name="name" required="required"/>

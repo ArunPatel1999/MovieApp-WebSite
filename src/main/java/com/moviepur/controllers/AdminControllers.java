@@ -15,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.moviepur.entity.Movie;
@@ -62,6 +64,14 @@ public class AdminControllers {
 		return "Add";
 	}
 	
+	@GetMapping("/addWithFile")
+	public String getAddWithFile(Model model) {
+		model.addAttribute("title","Add");
+		model.addAttribute("movie", new Movie());
+		return "Add";
+	}
+	
+	
 	@PostMapping("/edit")
 	public String getEditPage(@RequestParam("id") int id, Model model) {
 		
@@ -88,6 +98,25 @@ public class AdminControllers {
 		}else {
 			adminApiService.update(movie.getId(), movie);
 		}
+		return new ModelAndView("redirect:"+"/");
+	}
+	
+	@PostMapping("/saveWithFile")
+	public ModelAndView saveWithFile(@ModelAttribute Movie movie ,HttpServletRequest request) {
+		
+		movie.setRunTime(request.getParameter("hour")+"h "+ (request.getParameter("min").length() > 1 ? request.getParameter("min") :"0"+request.getParameter("min")) +"m");
+		movie.setReleaseDate(LocalDate.parse(request.getParameter("y")+"-"+ (request.getParameter("m").length() > 1 ? request.getParameter("m") :"0"+request.getParameter("m"))+"-"+(request.getParameter("d").length() > 1 ? request.getParameter("d") :"0"+request.getParameter("d"))));
+		movie.setDownload_link(IntStream.range(0, Arrays.asList(request.getParameterValues("downloadname")).size()).collect(LinkedHashMap::new, (m, i) -> m.put(Arrays.asList(request.getParameterValues("downloadname")).get(i), Arrays.asList(request.getParameterValues("downloadvalue")).get(i)), Map::putAll));
+	//	adminApiService.saveWithFile(movie, image, otherImage, download);
+			adminApiService.saveWithFile(movie, null, null, null);
+		return new ModelAndView("redirect:"+"/");
+	}
+	
+	
+	
+	@GetMapping("/updateFirebaseclss")
+	public ModelAndView updateFirebaseclss() {
+		adminApiService.firebaseClassUpdate();
 		return new ModelAndView("redirect:"+"/");
 	}
 	
