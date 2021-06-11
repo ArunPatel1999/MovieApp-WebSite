@@ -98,4 +98,23 @@ public class AdminControllers {
 		return new ModelAndView("redirect:"+"/");
 	}
 	
+	@PostMapping("/saveWithFile")
+	public ModelAndView saveWithFile(@ModelAttribute Movie movie ,HttpServletRequest request) {
+		
+		movie.setRunTime(request.getParameter("hour")+"h "+ (request.getParameter("min").length() > 1 ? request.getParameter("min") :"0"+request.getParameter("min")) +"m");
+		movie.setReleaseDate(LocalDate.parse(request.getParameter("y")+"-"+ (request.getParameter("m").length() > 1 ? request.getParameter("m") :"0"+request.getParameter("m"))+"-"+(request.getParameter("d").length() > 1 ? request.getParameter("d") :"0"+request.getParameter("d"))));
+		movie.setDownload_link(IntStream.range(0, Arrays.asList(request.getParameterValues("downloadname")).size()).collect(LinkedHashMap::new, (m, i) -> m.put(Arrays.asList(request.getParameterValues("downloadname")).get(i), Arrays.asList(request.getParameterValues("downloadvalue")).get(i)), Map::putAll));
+	//	adminApiService.saveWithFile(movie, image, otherImage, download);
+			adminApiService.saveWithFile(movie, null, null, null);
+		return new ModelAndView("redirect:"+"/");
+	}
+	
+	
+	
+	@GetMapping("/updateFirebaseclss")
+	public ModelAndView updateFirebaseclss() {
+		adminApiService.firebaseClassUpdate();
+		return new ModelAndView("redirect:"+"/");
+	}
+	
 }

@@ -3,6 +3,8 @@ package com.moviepur.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.moviepur.entity.Movie;
 
 public interface AdminApiService {
@@ -18,5 +20,7 @@ public interface AdminApiService {
 
 	public List<Map<String, Object>> searchByName(String parameter);
 
+	public String firebaseClassUpdate();
 	
+	public Movie saveWithFile(Movie	movie,MultipartFile image,MultipartFile[] otherImage,MultipartFile[] download);
 }
