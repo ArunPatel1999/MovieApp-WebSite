@@ -75,13 +75,6 @@ public class AdminApiServiceImpl implements AdminApiService {
 	@Override
 	public Movie saveWithFile(Movie movie, MultipartFile image, MultipartFile[] otherImages, MultipartFile[] downloads) {
 		try {
-		movie.setImage_url(uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/imageUrl/", movie.getName()+image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf(".")), image, "media"));
-		Set<String> otherImageName = new LinkedHashSet<>();
-		int i=1;
-		for (MultipartFile  otherImage: otherImages) 
-			otherImageName.add(uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/otherImages/", movie.getName()+"_"+(i++)+""+otherImage.getOriginalFilename().substring(otherImage.getOriginalFilename().lastIndexOf(".")), otherImage, "media"));
-		movie.setOtherImages(otherImageName);
-		
 		
 		Map<String, String> downlodMap = new LinkedHashMap<>();
 		if(downloads.length == 1 ) {
@@ -91,11 +84,19 @@ public class AdminApiServiceImpl implements AdminApiService {
 		String downloadName = "Download_";
 		if(movie.getType() == Type.Series)
 			downloadName = "Part_";
-		i=1;
+		int i=1;
 		if(downloads.length > 1) {
 		for (MultipartFile  download: downloads) 
 			downlodMap.put( downloadName+i , uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/video/", movie.getName()+"_"+downloadName+(i++)+""+download.getOriginalFilename().substring(download.getOriginalFilename().lastIndexOf(".")), download, "video/x-matroska"));
 		}
+		
+		movie.setImage_url(uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/imageUrl/", movie.getName()+image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf(".")), image, "media"));
+		Set<String> otherImageName = new LinkedHashSet<>();
+
+		for (MultipartFile  otherImage: otherImages) 
+			otherImageName.add(uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/otherImages/", movie.getName()+"_"+(i++)+""+otherImage.getOriginalFilename().substring(otherImage.getOriginalFilename().lastIndexOf(".")), otherImage, "media"));
+		movie.setOtherImages(otherImageName);
+		
 		
 		movie.setDownload_link(downlodMap);
 		
