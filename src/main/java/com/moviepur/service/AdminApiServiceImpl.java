@@ -1,10 +1,7 @@
 package com.moviepur.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -77,53 +74,58 @@ public class AdminApiServiceImpl implements AdminApiService {
 	
 	@Override
 	public Movie saveWithFile(Movie movie, MultipartFile image, MultipartFile[] otherImages, MultipartFile[] downloads) {
-		movie.setImage_url(uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/imageUrl/", movie.getName()+image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf(".")), image));
+		try {
+		movie.setImage_url(uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/imageUrl/", movie.getName()+image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf(".")), image, "media"));
 		Set<String> otherImageName = new LinkedHashSet<>();
 		int i=1;
 		for (MultipartFile  otherImage: otherImages) 
-			otherImageName.add(uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/otherImages/", movie.getName()+"_"+(i++)+""+otherImage.getOriginalFilename().substring(otherImage.getOriginalFilename().lastIndexOf(".")), otherImage));
+			otherImageName.add(uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/otherImages/", movie.getName()+"_"+(i++)+""+otherImage.getOriginalFilename().substring(otherImage.getOriginalFilename().lastIndexOf(".")), otherImage, "media"));
 		movie.setOtherImages(otherImageName);
 		
 		
 		Map<String, String> downlodMap = new LinkedHashMap<>();
+		if(downloads.length == 1 ) {
+			downlodMap.put( "Download" , uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/video/", movie.getName()+downloads[0].getOriginalFilename().substring(downloads[0].getOriginalFilename().lastIndexOf(".")), downloads[0], "video/x-matroska"));
+		}
+		
 		String downloadName = "Download_";
 		if(movie.getType() == Type.Series)
 			downloadName = "Part_";
 		i=1;
-		if(downloads.length >= 1) {
+		if(downloads.length > 1) {
 		for (MultipartFile  download: downloads) 
-			downlodMap.put( downloadName+i , uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/video/", movie.getName()+"_"+downloadName+(i++)+""+download.getOriginalFilename().substring(download.getOriginalFilename().lastIndexOf(".")), download));
+			downlodMap.put( downloadName+i , uploadingFirebase(""+movie.getType()+"/"+movie.getName()+"/video/", movie.getName()+"_"+downloadName+(i++)+""+download.getOriginalFilename().substring(download.getOriginalFilename().lastIndexOf(".")), download, "video/x-matroska"));
 		}
 		
 		movie.setDownload_link(downlodMap);
 		
 		return restTemplate.postForEntity(MOVIEPURURL + "/main/add", movie, Movie.class).getBody();
+		}catch (Exception e) {
+			return null;
+		}
 	}
 	
-	private String uploadingFirebase(String folderName, String fileName, MultipartFile multipartFile) {
+	private String uploadingFirebase(String folderName, String fileName, MultipartFile multipartFile, String media) throws Exception {
 		try {
-			File tempFile = new File(fileName);
-			FileOutputStream fos = new FileOutputStream(tempFile);
-			fos.write(multipartFile.getBytes());
-			fos.close();
 
+			InputStream inputStream = createFirebaseCredential();
+			
 			BlobId blobId = BlobId.of(firebaseClass.getBuket(), folderName + fileName);
 
 			Map<String, String> map = new HashMap<>();
 			map.put("firebaseStorageDownloadTokens", "moviepur");
 
-			BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setMetadata(map).setContentType("media").build();
+			BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setMetadata(map).setContentType(media).build();
 
-			Credentials credentials = GoogleCredentials.fromStream(createFirebaseCredential());
+			Credentials credentials = GoogleCredentials.fromStream(inputStream);
 
 			Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-			storage.create(blobInfo, Files.readAllBytes(tempFile.toPath()));
-			tempFile.delete(); // to delete the copy of uploaded file stored in the project folder
-
+			storage.create(blobInfo, multipartFile.getBytes());
+			
 			return "https://firebasestorage.googleapis.com/v0/b/"+firebaseClass.getBuket()+"/o/"
 					+ (folderName + fileName).replace("/", "%2F") + "?alt=media&token=moviepur";
 		} catch (Exception e) {
-			return "error";
+			throw new Exception(e.getLocalizedMessage());
 		}
 	}
 
