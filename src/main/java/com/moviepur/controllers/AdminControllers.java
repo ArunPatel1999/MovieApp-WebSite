@@ -1,10 +1,6 @@
 package com.moviepur.controllers;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,7 +56,7 @@ public class AdminControllers {
 	public String getAddPage(Model model) {
 		model.addAttribute("title","Add");
 		model.addAttribute("movie", new Movie());
-		return "Add";
+		return "Add2";
 	}
 	
 	@GetMapping("/addWithFile")
@@ -90,7 +86,6 @@ public class AdminControllers {
 		
 		movie.setRunTime(request.getParameter("hour")+"h "+ (request.getParameter("min").length() > 1 ? request.getParameter("min") :"0"+request.getParameter("min")) +"m");
 		movie.setReleaseDate(LocalDate.parse(request.getParameter("y")+"-"+ (request.getParameter("m").length() > 1 ? request.getParameter("m") :"0"+request.getParameter("m"))+"-"+(request.getParameter("d").length() > 1 ? request.getParameter("d") :"0"+request.getParameter("d"))));
-		movie.setDownload_link(IntStream.range(0, Arrays.asList(request.getParameterValues("downloadname")).size()).collect(LinkedHashMap::new, (m, i) -> m.put(Arrays.asList(request.getParameterValues("downloadname")).get(i), Arrays.asList(request.getParameterValues("downloadvalue")).get(i)), Map::putAll));
 		if(movie.getId()==0) {
 				adminApiService.save(movie);
 		}else {

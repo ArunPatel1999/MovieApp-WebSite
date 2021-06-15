@@ -98,7 +98,7 @@ public class AdminApiServiceImpl implements AdminApiService {
 		movie.setOtherImages(otherImageName);
 		
 		
-		movie.setDownload_link(downlodMap);
+		//movie.setDownload_link(downlodMap);
 		
 		return restTemplate.postForEntity(MOVIEPURURL + "/main/add", movie, Movie.class).getBody();
 		}catch (Exception e) {
