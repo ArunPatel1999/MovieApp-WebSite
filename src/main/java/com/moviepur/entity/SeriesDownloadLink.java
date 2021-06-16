@@ -1,7 +1,5 @@
 package com.moviepur.entity;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,13 +8,14 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class MovieLite {
+public class SeriesDownloadLink {
 
-	private int id;
-	private String name,image_url;
-	private LocalDate releaseDate;
-	
+	private int partId;
+	private String partName;
+	private String partRunTime;
+	private String partImage;
+	private String partLink;
 }
