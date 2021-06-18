@@ -28,7 +28,7 @@ public class Movie {
 	private float imdb;
 	private float moviepur;
 	private String movieDownloadLink;
-	private Set<SeriesDownloadLink> seriesDownloadLinks;
+	private Set<SeriesDownloadLink> seriesDownloadLink;
 	private Set<String> genre ;
 	private Set<String> language ;
 	private Set<String> otherImages;
@@ -36,8 +36,8 @@ public class Movie {
 	public Movie() {
 		type = Type.Movie;
 		
-		seriesDownloadLinks =  new LinkedHashSet<>();
-		seriesDownloadLinks.add(new SeriesDownloadLink(1,"a","b","c","d"));
+		seriesDownloadLink =  new LinkedHashSet<>();
+		seriesDownloadLink.add(new SeriesDownloadLink(1,"a","a","a","a"));
 		
 		genre =  new LinkedHashSet<>();
 		genre.add("Action");
@@ -47,6 +47,8 @@ public class Movie {
 		language.add("Hindi");
 		
 		otherImages = new LinkedHashSet<>();
+		otherImages.add(null);
+		
 		
 		
 	}

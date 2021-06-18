@@ -16,12 +16,7 @@ $(document).ready(function(){
 		
 	 $($('.movieDownload')).show().find(':input').attr('required', true);
 	 $($('.download')).hide().find(':input').attr('required', false);
-	 $($('.download')).append('<div class="input-group"  th:each="series : ${movie.seriesDownloadLinks}">  <input type="number" th:value="${series.partId}" name="partId"   style="width: 10%; text-align:left ;" placeholder="id">  <input type="text" th:value="${series.partName}" name="partName"  style="width: 20%; text-align: center;" placeholder="Name">  <input type="text" th:value="${series.partRunTime}" name="partRunTime" style="width: 20%; text-align: center;" placeholder="RunTime">	<input type="text" th:value="${series.partImage}" name="partImage" style="width: 20%; text-align: center;" placeholder="image">  <input type="text" th:value="${series.partLink}" name="partLink"  style="width: 20%; text-align: center;" placeholder="link">	<a href="#" style="text-decoration:none;" class="removeDownload"><strong>--</strong></a> </div> ');
-	 $($('.otherImages')).append('<div class="input-group input-group-icon" th:each="otherImages : ${movie.otherImages}"><input type="text" th:value="${otherImages}" required="required" name="otherImages" style="width: 90%;">  <a href="#" style="text-decoration:none;" class="removeOtherImages"><strong> --</strong></a><div class="input-icon"><i class="fa fa-file-image-o"></i></div></div>');
-	 $($('.otherImages')).append('<div class="input-group input-group-icon" th:each="otherImages : ${movie.otherImages}"><input type="text" th:value="${otherImages}" required="required" name="otherImages" style="width: 90%;">  <a href="#" style="text-decoration:none;" class="removeOtherImages"><strong> --</strong></a><div class="input-icon"><i class="fa fa-file-image-o"></i></div></div>');
-	 $($('.otherImages')).append('<div class="input-group input-group-icon" th:each="otherImages : ${movie.otherImages}"><input type="text" th:value="${otherImages}" required="required" name="otherImages" style="width: 90%;">  <a href="#" style="text-decoration:none;" class="removeOtherImages"><strong> --</strong></a><div class="input-icon"><i class="fa fa-file-image-o"></i></div></div>');
-	 $($('.otherImages')).append('<div class="input-group input-group-icon" th:each="otherImages : ${movie.otherImages}"><input type="text" th:value="${otherImages}" required="required" name="otherImages" style="width: 90%;">  <a href="#" style="text-decoration:none;" class="removeOtherImages"><strong> --</strong></a><div class="input-icon"><i class="fa fa-file-image-o"></i></div></div>');
-		 
+	 	 
 	$($('.showMovie')).click(function(){
 		 $($('.movieDownload')).show().find(':input').attr('required', true);
 	    $($('.download')).hide().find(':input').attr('required', false);
@@ -42,7 +37,9 @@ $(document).ready(function(){
     });
 
     $($('.addDownload')).click(function(){
-            $($('.download')).append('<div class="input-group"  th:each="series : ${movie.seriesDownloadLinks}">  <input type="number" th:value="${series.partId}" name="partId" required="required"  value="Download" style="width: 10%; text-align:left ;" placeholder="id">   <input type="text" th:value="${series.partName}" name="partName" required="required" style="width: 20%; text-align: center;" placeholder="Name">  <input type="text" th:value="${series.partRunTime}" name="partRunTime" required="required" style="width: 20%; text-align: center;" placeholder="RunTime">  <input type="text" th:value="${series.partImage}" name="partImage" required="required" style="width: 20%; text-align: center;" placeholder="image">  <input type="text" th:value="${series.partLink}" name="partLink" required="required" style="width: 20%; text-align: center;" placeholder="link">  <a href="#" style="text-decoration:none;" class="removeDownload"><strong>--</strong></a></div>');
+<!--    	 $($('.download')).append(' <div class="input-group"  th:each="series,itemStat : ${movie.seriesDownloadLink}"><input type="number" th:field="*{movie.seriesDownloadLink[__${itemStat.index}__].partId}"  style="width: 10%; text-align:left ;" placeholder="id">  <input type="text" th:field="*{movie.seriesDownloadLink[__${itemStat.index}__].partName}" style="width: 20%; text-align: center;" placeholder="Name">   <input type="text" th:field="*{movie.seriesDownloadLink[__${itemStat.index}__].partRunTime}" style="width: 20%; text-align: center;" placeholder="RunTime">		<input type="text" th:field="*{movie.seriesDownloadLink[__${itemStat.index}__].partImage}" style="width: 20%; text-align: center;" placeholder="image">   <input type="text" th:field="*{movie.seriesDownloadLink[__${itemStat.index}__].partLink}" style="width: 20%; text-align: center;" placeholder="link">	<a href="#" style="text-decoration:none;" class="removeDownload"><strong>--</strong></a> </div>'); --> 
+ <!--   	 $($('.download')).append(' <div class="input-group"  th:each="series,itemStat : ${movie.seriesDownloadLink}">     <input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partId|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partId}"/><input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partName|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partName}"/><input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partRunTime|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partRunTime}"/></div>'); -->
+
     });
 
     $($('.addOtherImages')).click(function(){
@@ -231,17 +228,20 @@ $(document).ready(function(){
        
        <div class="row download">   
          <h4>Download Link For Series <a href="#" style="text-decoration:none;" class="addDownload"><strong>   +</strong></a></h4>	   
-         <div class="input-group"  th:each="catFeatGroup,status : ${movie.seriesDownloadLinks}" >
+       
+        <div class="input-group"  th:each="series,itemStat : ${movie.seriesDownloadLink}"> 
+         <!-- 	<input type="number" th:value="${movie.seriesDownloadLink[__${itemStat.index}__].partId}"  style="width: 10%; text-align:left ;" placeholder="id">
+         	<input type="text" th:value="${movie.seriesDownloadLink[__${itemStat.index}__].partName}" style="width: 20%; text-align: center;" placeholder="Name">  
+         	<input type="text" th:value="${movie.seriesDownloadLink[__${itemStat.index}__].partRunTime}" style="width: 20%; text-align: center;" placeholder="RunTime">	
+         	<input type="text" th:value="${movie.seriesDownloadLink[__${itemStat.index}__].partImage}" style="width: 20%; text-align: center;" placeholder="image">  
+         	<input type="text" th:value="${movie.seriesDownloadLink[__${itemStat.index}__].partLink}" style="width: 20%; text-align: center;" placeholder="link">	
+         	<a href="#" style="text-decoration:none;" class="removeDownload"><strong>--</strong></a>  -->
+
+         <input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partId|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partId}"/>
+        <input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partName|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partName}"/>
+        <input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partRunTime|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partRunTime}"/>
+         </div>        
          
-         <input th:field="*{catFeatGroupList[__${status.index}__].partId}" name="partId"  th:value="${catFeatGroup.partId}" />
-         <!-- 
-	      		<input type="number" th:field="*{series[__${itemStat.index}__].partId}" style="width: 10%; text-align:left ;" placeholder="id"> 
-            	<input type="text" th:field="${series[partName]}"  style="width: 20%; text-align: center;" placeholder="Name">
-            	<input type="text" th:field="${series[partRunTime]}"  style="width: 20%; text-align: center;" placeholder="RunTime">
-            	<input type="text" th:field="${series[partImage]}" style="width: 20%; text-align: center;" placeholder="image">
-            	<input type="text" th:field="${series[partLink]}" style="width: 20%; text-align: center;" placeholder="link">
-           		<a href="#" style="text-decoration:none;" class="removeDownload"><strong>--</strong></a>
-	      --> </div> 
       </div>
        
    

@@ -84,12 +84,11 @@ public class AdminControllers {
 	@PostMapping("/save")
 	public ModelAndView saveData(@ModelAttribute Movie movie ,HttpServletRequest request) {
 		
-		movie.setRunTime(request.getParameter("hour")+"h "+ (request.getParameter("min").length() > 1 ? request.getParameter("min") :"0"+request.getParameter("min")) +"m");
-		movie.setReleaseDate(LocalDate.parse(request.getParameter("y")+"-"+ (request.getParameter("m").length() > 1 ? request.getParameter("m") :"0"+request.getParameter("m"))+"-"+(request.getParameter("d").length() > 1 ? request.getParameter("d") :"0"+request.getParameter("d"))));
-	
-		System.out.println(request.getParameter("series"));
-		System.out.println(movie);
-		movie.getSeriesDownloadLinks().forEach(System.out::println);
+//		movie.setRunTime(request.getParameter("hour")+"h "+ (request.getParameter("min").length() > 1 ? request.getParameter("min") :"0"+request.getParameter("min")) +"m");
+//		movie.setReleaseDate(LocalDate.parse(request.getParameter("y")+"-"+ (request.getParameter("m").length() > 1 ? request.getParameter("m") :"0"+request.getParameter("m"))+"-"+(request.getParameter("d").length() > 1 ? request.getParameter("d") :"0"+request.getParameter("d"))));
+//	
+		
+		System.out.println(movie.getSeriesDownloadLink());
 		
 //		if(movie.getId()==0) {
 //				adminApiService.save(movie);

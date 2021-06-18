@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+  <script  src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.7/jquery.min.js"></script>
+  <script>
+
+$(document).ready(function(){
+
+	  $($('.test')).append('<div class="test" th:each="seriesDownloadLink, itemStat : ${movie.seriesDownloadLink}"><input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partId|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partId}"/><input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partName|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partName}"/><input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partRunTime|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partRunTime}"/></div>');
+  }
+  
+  </script>
+</head>
+<body>
+
+<form action="#" th:action="@{/save}" th:object="${movie}"
+  method="post">
+    <fieldset>
+        <input type="submit" id="submitButton" th:value="Save">
+        <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+        
+            <div class="test" th:each="seriesDownloadLink, itemStat : ${movie.seriesDownloadLink}">
+        <input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partId|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partId}"/>
+        <input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partName|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partName}"/>
+        <input type="text" th:name="|movie.seriesDownloadLink[${itemStat.index}].partRunTime|"  th:field="${movie.seriesDownloadLink[__${itemStat.index}__].partRunTime}"/>
+    </div>
+    
+      </fieldset>
+</form>
+
+</body>
+</html>
